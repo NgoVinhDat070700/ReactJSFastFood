@@ -1,0 +1,42 @@
+.category-container{
+    display:flex;
+    padding: 20px;
+    justify-content: space-between;
+}
+.category-item{
+    flex: 1;
+    margin: 3px;
+    height: 350px;
+    position: relative;
+}
+.category-image{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    object-fit: cover;
+}
+.category-info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.info-title{
+    color: white;
+    margin-top: 20px;
+}
+.button-category{
+    border: none;
+    padding: 10px;
+    background-color: white;
+    color: gray;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
