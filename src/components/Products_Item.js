@@ -2,6 +2,9 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@m
 import React from 'react'
 
 const Products_Item = (item)=>{
+    const handleAddCart = ()=>{ 
+        console.log('AddCart')
+    }
     return (
         <div className="product-item" >
             <div className="circle">
@@ -9,7 +12,7 @@ const Products_Item = (item)=>{
                 <div className="product-name">{item.item.nameproduct}</div>
                 <div className="product-icon">
                     <div className="icon">
-                        <ShoppingCartOutlined />
+                        <ShoppingCartOutlined onClick={handleAddCart} />
                     </div>
                     <div className="icon">
                         <SearchOutlined />

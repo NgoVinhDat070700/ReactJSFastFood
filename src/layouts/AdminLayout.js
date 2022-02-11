@@ -6,13 +6,13 @@ import ListRouterAdmin from '../routes/ListRouterAdmin'
 import '../assets/js/scripts'
 const AdminLayout = ()=>{
     return (
-        <div className="sb-nav-fixed">
+        <div className="layout-container">
             <Navbar />
-            <div id="layoutSidenav">
-                <div id="layoutSidenav_nav">
+            <div id="sidebar-container" style={{display:"flex"}}>
+                <div id="layout-sidebar">
                     <Sidebar />
                 </div>
-                <div id="layoutSidenav_content">
+                <div id="content-pages">
                     <main>
                         <Switch>
                             {ListRouterAdmin.map((route,idx)=>{

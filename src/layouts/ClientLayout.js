@@ -16,7 +16,7 @@ function ClientLayout() {
                 path={listroute.path}
                 exact={listroute.exact}
                 name={listroute.name}
-                render={(props) => <listroute.component {...props} />}
+                render={(props) => (<listroute.component {...props} />)}
               />
             )
           );

@@ -1,26 +1,26 @@
-.nav-container{
+.navbar-container{
     height: 60px;
     /* background-color: lightslategrey; */
     border: 1px solid gray;
 }
-.nav-wrapper{
+.navbar-wrapper{
     padding: 10px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.nav-wrapper .nav-left{
+.navbar-wrapper .navbar-left{
     flex: 1;
     display: flex;
     margin: auto;
     align-items: center;
 }
-.nav-language{
+.navbar-language{
     font-size: 14;
     cursor: pointer;
     margin-left: 50px;
 }
-.nav-search{
+.navbar-search{
     border: 0.5px solid lightgray;
     display: flex;
     align-items: center;
@@ -30,14 +30,14 @@
 input{
     border: none;
 }
-.nav-center{
+.navbar-center{
     flex: 1;
     text-align: center;
 }
 .logo{
     font-weight: bold;
 }
-.nav-right{
+.navbar-right{
     flex: 1;
     display: flex;
     align-items: center;

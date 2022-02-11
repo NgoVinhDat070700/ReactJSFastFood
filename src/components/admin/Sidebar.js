@@ -1,83 +1,74 @@
-import React from 'react'
-import { Link} from 'react-router-dom'
-const Sidebar = ()=>{
-    return(
-        <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div className="sb-sidenav-menu">
-                        <div className="nav">
-                            <div className="sb-sidenav-menu-heading">Core</div>
-                            <Link className="nav-link" to="index.html">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </Link>
-                            <Link className="nav-link" to="/admin/view-category">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                                View Category
-                            </Link>
-                            <Link className="nav-link" to="/admin/add-category">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                                Add Category
-                            </Link>
+import "./sidebar.scss";
+import {
+  LineStyle,
+  Timeline,
+  TrendingUp,
+  PermIdentity,
+  Storefront,
+  AttachMoney,
+  BarChart,
+  MailOutline,
+  DynamicFeed,
+  ChatBubbleOutline,
+  WorkOutline,
+  Report,
+  AssessmentRounded,
+} from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
-                            <div className="sb-sidenav-menu-heading">Interface</div>
-                            <Link className="nav-link collapsed" to="#" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapseProduct">
-                                <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                                Product
-                                <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                            </Link>
-                            <div className="collapse" id="collapseProduct" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav className="sb-sidenav-menu-nested nav">
-                                    <Link className="nav-link" to="/admin/view-product">View Product</Link>
-                                    <Link className="nav-link" to="/admin/add-product">Add Product</Link>
-                                </nav>
-                            </div>
-                            <Link className="nav-link collapsed" to="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
-                                Pages
-                                <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                            </Link>
-                            <div className="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav className="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <Link className="nav-link collapsed" to="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                                    </Link>
-                                    <div className="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav className="sb-sidenav-menu-nested nav">
-                                            <Link className="nav-link" to="login.html">Login</Link>
-                                            <Link className="nav-link" to="register.html">Register</Link>
-                                            <Link className="nav-link" to="password.html">Forgot Password</Link>
-                                        </nav>
-                                    </div>
-                                    <Link className="nav-link collapsed" to="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                                    </Link>
-                                    <div className="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav className="sb-sidenav-menu-nested nav">
-                                            <Link className="nav-link" to="401.html">401 Page</Link>
-                                            <Link className="nav-link" to="404.html">404 Page</Link>
-                                            <Link className="nav-link" to="500.html">500 Page</Link>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
-                            <div className="sb-sidenav-menu-heading">Addons</div>
-                            <Link className="nav-link" to="charts.html">
-                                <div className="sb-nav-link-icon"><i className="fas fa-chart-area"></i></div>
-                                Charts
-                            </Link>
-                            <Link className="nav-link" to="tables.html">
-                                <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
-                                Tables
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="sb-sidenav-footer">
-                        <div className="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>
-                </nav>
-    )
+export default function Sidebar() {
+  return (
+    <div className="sidebar">
+      <div className="sidebarWrapper">
+        <div className="sidebarMenu">
+          <h3 className="sidebarTitle">Dashboard</h3>
+          <ul className="sidebarList">
+            <Link to="/" className="link">
+            <li className="sidebarListItem active">
+              <LineStyle className="sidebarIcon" />
+              Home
+            </li>
+            </Link>
+          </ul>
+        </div>
+        <div className="sidebarMenu">
+          <h3 className="sidebarTitle">Quick Menu</h3>
+          <ul className="sidebarList">
+            <Link to="/admin/list_account_user" className="link">
+              <li className="sidebarListItem">
+                <PermIdentity className="sidebarIcon" />
+                Users
+              </li>
+            </Link>
+            <Link to="/admin/products" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Products
+              </li>
+            </Link>
+            <Link to="/admin/news" className="link">
+              <li className="sidebarListItem">
+                <AssessmentRounded className="sidebarIcon" />
+                News
+              </li>
+            </Link>
+            <Link className="link">
+              <li className="sidebarListItem">
+                <BarChart className="sidebarIcon" />
+                Reports
+              </li>
+            </Link>
+          </ul>
+        </div>
+        <div className="sidebarMenu">
+          <ul className="sidebarList">
+            <li className="sidebarListItem">
+              <MailOutline className="sidebarIcon" />
+              Logout
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }
-export default Sidebar

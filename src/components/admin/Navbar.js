@@ -1,31 +1,29 @@
-import { Link } from '@material-ui/core'
-import React from 'react'
-const Navbar = ()=>{
-    return ( 
-        <nav className="main-header navbar navbar-expand navbar-white navbar-da bg-dark">
-            <ul className="navbar-nav">
-                <li className="nav-item">
-                    <h4><Link className="nav-link" to="">FastFood</Link></h4>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="">Home</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="">Logout</Link>
-                </li>
-            </ul>
-            <form class="form-inline ml-3">
-                <div className="input-group input-group-sm">
-                    <input className="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" ></input>
-                    <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    </div>
-                </div>
-            </form>
-            
-        </nav>
-    )
+import React from "react";
+import "./navbar.scss";
+import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+
+export default function Navbar() {
+  return (
+    <div className="topbar">
+      <div className="topbarWrapper">
+        <div className="topLeft">
+          <span className="logo">FastFood Dashboard</span>
+        </div>
+        <div className="topRight">
+          <div className="topbarIconContainer">
+            <NotificationsNone />
+            <span className="topIconBadge">2</span>
+          </div>
+          <div className="topbarIconContainer">
+            <Language />
+            <span className="topIconBadge">2</span>
+          </div>
+          <div className="topbarIconContainer">
+            <Settings />
+          </div>
+          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
+        </div>
+      </div>
+    </div>
+  );
 }
-export default Navbar
