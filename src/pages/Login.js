@@ -25,6 +25,8 @@ const Login = ()=>{
         axios.post('http://localhost:5000/api/users/login',data)
             .then(res=>{
                 localStorage.setItem('token',res.data.accessToken)
+                localStorage.setItem('user_id',res.data._id)
+                localStorage.setItem('username',res.data.username)
                 console.log(res.status)
                 if(res.status === 200)
                 {

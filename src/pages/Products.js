@@ -1,8 +1,25 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import '../assets/css/product.css'
 import Product_List from '../components/Product_List'
 const Products = ()=>{
+    const [categoryList,setCategoryList] = useState([])
+    const [products,setProducts] = useState([])
+    useEffect(()=>{
+        axios.get('http://localhost:5000/api/category').then(res=>{
+            setCategoryList(res.data)
+        })
+    },[])
+    const [filters, setFilters] = useState({});
+    const handleCategory = (e) => {
+        const value = e.target.value;
+        setFilters({
+          ...filters,
+          [e.target.name]: value,
+        });
+      };
+      console.log(filters)
     return(
         <>
             <div className="banner-product">
@@ -19,22 +36,16 @@ const Products = ()=>{
             <div className="filter-product">
                 <div className="filter">
                     <span>Filter Products:</span>
-                    <select>
+                    <select onChange={handleCategory} name="cat_id">
                         <option disabled selected>Category</option>
-                        <option>hamberger</option>
-                        <option>Trà sữa</option>
-                        <option>Combo gà KFC</option>
-                    </select>
-                    <span>Sort Product:</span>
-                    <select>
-                        <option selected>Mời chọn</option>
-                        <option>DESC</option>
-                        <option>ASC</option>
+                        {categoryList.map(item=>
+                                <option value={item._id} key={item._id}>{item.namecategory}</option>
+                        )}
                     </select>
                     
                 </div>
             </div>
-            <Product_List />
+            <Product_List cat_id={filters.cat_id} />
            
         </>
     )

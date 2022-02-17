@@ -7,7 +7,6 @@ import {useHistory,Link} from 'react-router-dom'
 import { addToCart } from '../redux/cartSlice'
 const Product_List = ({cat_id,filters})=>{
     const [products,setProducts]=useState([])
-        const [filterProducts,setFilterProducts]=useState([])
         
         const history = useHistory()
         const dispatch = useDispatch()
@@ -22,7 +21,7 @@ const Product_List = ({cat_id,filters})=>{
             const getProducts = async ()=>{
                 try {
                     const res = await axios.get(cat_id?
-                        `? http://localhost:5000/api/products?category=${cat_id}`
+                        `http://localhost:5000/api/products/search_category?category_id=${cat_id}`
                         : "http://localhost:5000/api/products")
                         setProducts(res.data)
                 }
@@ -32,16 +31,6 @@ const Product_List = ({cat_id,filters})=>{
             }
             getProducts()
         }, [cat_id])     
-        useEffect(() => {
-            cat_id &&
-              setFilterProducts(
-                products.filter((item) =>
-                  Object.entries(filters).every(([key, value]) =>
-                    item[key].includes(value)
-                  )
-                )
-              );
-          }, [products, cat_id, filters]);
     return (
         <div className="product-container">
             {products.map((item)=>

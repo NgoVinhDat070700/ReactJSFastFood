@@ -1,15 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { Add, Delete, Remove } from "@material-ui/icons";
 import "../assets/css/cart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, decreaseCart, removeFromCart } from "../redux/cartSlice";
+import swal from "sweetalert";
+import axios from "axios";
 const Cart = () => {
   const cart = useSelector((state) => state.cart.cartItems);
+  console.log(cart)
   const dispatch = useDispatch();
   const addition = (acc, currentvalue) => {
     return acc + currentvalue.price * currentvalue.qty;
   };
   const total = cart.reduce(addition, 0);
+  const [paymentInput,setPaymentInput] = useState({
+    address:'',
+    phone:''
+  })
+  const handleInput=(e)=>{
+    e.persist()
+    setPaymentInput({...paymentInput,[e.target.name]:e.target.value})
+  }
+  const products = cart.map((item)=>{
+    return {
+    product_id:item.id,
+    qty:item.qty
+  }})
+  console.log(products)
+  const handlePayment = (e)=>{
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('userId',localStorage.getItem('user_id'))
+    formData.append('products',products)
+    formData.append('amount',total)
+    formData.append('address',paymentInput.address)
+    formData.append('phone',paymentInput.phone)
+    axios.post('http://localhost:5000/api/order',formData).then(res=>{
+      console.log('data',res.data)
+        if(res.status===200)
+        {
+         swal('Success',res.data.message,'Success')
+         localStorage.removeItem('cartItems')
+         setPaymentInput({...paymentInput,
+             address:'',
+             phone:''
+         })
+        }
+        else{
+            swal("Error","Error")
+            
+        }
+    })
+  }
   return (
     <div className="container-cart">
       <div className="cart-wrapper">
@@ -50,9 +92,22 @@ const Cart = () => {
               <div className="item-text">Subtotal</div>
               <div className="item-price">{total} VNĐ</div>
             </div>
-            <button className="botton-cart" style={{cursor:"pointer"}}>Checkout Now</button>
           </div>
         </div>
+        <div className="summary">
+            <h1 className="summary-title">Payment</h1>
+            <form onSubmit={handlePayment} >
+              <div className="form-payment">
+                <label>Address:</label>
+                <input type="text" name="address" onChange={handleInput} value={paymentInput.address} required />
+              </div>
+              <div className="form-payment">
+                <label>Phone:</label>
+                <input type="text" name="phone" onChange={handleInput} value={paymentInput.phone} required/>
+              </div>
+              <button type="submit" className="botton-cart" style={{cursor:"pointer"}}>Payment</button>
+            </form>
+          </div>
       </div>
     </div>
   );

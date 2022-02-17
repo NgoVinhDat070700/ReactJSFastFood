@@ -40,7 +40,7 @@ function EditProduct(props){
         e.preventDefault()
         const product_id = props.match.params._id
         const formData = new FormData()
-        formData.append('image',productInput.image)
+        formData.set('image',pricture.image)
         formData.append('nameproduct',productInput.nameproduct)
         formData.append('price',productInput.price)
         formData.append('desc',productInput.desc)

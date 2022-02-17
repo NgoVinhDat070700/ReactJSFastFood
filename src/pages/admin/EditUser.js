@@ -4,23 +4,20 @@ import swal from 'sweetalert'
 import {useHistory} from 'react-router-dom'
 
 function EditUser(props){
-    const [loading,setLoading]=useState(true)
-    const [newsInput,setNewsInput] = useState([]
-    )
-    const [pricture,setPriture] = useState([])
-    const history = useHistory()
     const [valueCheckbox,setValueCheckBox] = useState([])
+    const [loading,setLoading]=useState(true)
+    const history = useHistory()
     useEffect(()=>{
         const user_id = props.match.params._id
         axios.get(`http://localhost:5000/api/users/find/${user_id}`).then(res=>{ 
+        console.log(res.data)
             if(res.status===200)
             { 
-                setNewsInput(res.data)
                 setValueCheckBox(res.data)
             }
             else{
                 swal('Error',res.data.message,'Error')
-                history.push('/admin/products')
+                history.push('/admin/list_account_user')
             }
             setLoading(false)
         })
@@ -29,9 +26,9 @@ function EditUser(props){
         e.preventDefault()
         const user_id = props.match.params._id
         const formData = {
-            isAdmin:newsInput.isAdmin?'true':'false'
+            isAdmin:valueCheckbox.isAdmin?'true':'false'
         }
-        axios.put(`http://localhost:5000/api/products/updateProduct/${user_id}`,formData)
+        axios.put(`http://localhost:5000/api/users/updateUser/${user_id}`,formData)
         .then(res=>{
             if(res.status===200)
             {
@@ -46,13 +43,6 @@ function EditUser(props){
         e.persist()
         setValueCheckBox({...valueCheckbox,[e.target.name]:e.target.checked})
     }
-    const handleInput = (e)=>{
-        e.persist()
-        setNewsInput({...newsInput,[e.target.name]:e.target.value})
-    }
-    const handleImage = (e)=>{
-        setPriture({image:e.target.files[0]})
-    }
     if(loading)
     {
         return <h4>Loading Edit User....</h4>
@@ -63,7 +53,7 @@ function EditUser(props){
             <form onSubmit={handleSubmit} id="PRODUCT_FORM" encType="multipart/form-data" >
                 <div className="form-data">
                     <label>is Admin:</label>
-                    <input type="checkbox"  name="isAdmin"  onChange={handleCheckbox} defaultChecked={valueCheckbox.isAdmin ==='true' ? true:false}  ></input>
+                    <input type="checkbox"  name="isAdmin"  onChange={handleCheckbox} defaultChecked={valueCheckbox.isAdmin ===true ? true:false}  ></input>
                 </div>
                 <button type="submit" >Update</button>
 
