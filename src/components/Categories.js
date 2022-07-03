@@ -2,17 +2,15 @@ import React, { useState,useEffect } from 'react'
 import Categories_Item from './Categories_Item'
 import '../assets/css/category.css'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchDataCategories } from '../redux/CategoriSlice'
 const Categories = ()=>{
-    const [categories,setCategories] = useState([])
+    const {categories,isLoading} = useSelector((state)=>state.categories)
+    console.log(categories)
+    const dispatch = useDispatch()
     useEffect(()=>{
         const getAllCategory = async ()=>{
-            try{
-                const items = await axios.get('http://localhost:5000/api/category')
-                setCategories(items.data)
-            }
-            catch (err){
-                console.log(err)
-            }
+            dispatch(fetchDataCategories())
         }
         getAllCategory()
     },[])

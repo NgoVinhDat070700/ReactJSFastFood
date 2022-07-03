@@ -22,8 +22,8 @@ const Navbar = ()=>{
                     <div className="navbar-item"><Link className="link" to="/" >Home</Link></div>
                     <div className="navbar-item"><Link className="link" to="/Products" >Product</Link></div>
                     <div className="navbar-item"><Link className="link" to="/Cart" >Cart</Link></div>
-                    <div className="navbar-item"><Link className="link" to="/register" >REGISTER</Link></div>
-                    <div className="navbar-item"><Link className="link" to="/login">LOGIN</Link></div>
+                    <div className="navbar-item"><Link className="link" to="/register" >Register</Link></div>
+                    <div className="navbar-item"><Link className="link" to="/login">Login</Link></div>
                     <div className="navbar-item"><ShoppingCartOutlined /></div>
                 </div>
             </div>

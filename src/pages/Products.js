@@ -1,15 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import '../assets/css/product.css'
 import Product_List from '../components/Product_List'
+import { fetchDataCategories } from '../redux/CategoriSlice'
 const Products = ()=>{
-    const [categoryList,setCategoryList] = useState([])
-    const [products,setProducts] = useState([])
+    const {categories} = useSelector((state)=>state.categories)
+    const dispatch = useDispatch()
     useEffect(()=>{
-        axios.get('http://localhost:5000/api/category').then(res=>{
-            setCategoryList(res.data)
-        })
+        dispatch(fetchDataCategories())
     },[])
     const [filters, setFilters] = useState({});
     const handleCategory = (e) => {
@@ -38,7 +38,7 @@ const Products = ()=>{
                     <span>Filter Products:</span>
                     <select onChange={handleCategory} name="cat_id">
                         <option disabled selected>Category</option>
-                        {categoryList.map(item=>
+                        {categories.map(item=>
                                 <option value={item._id} key={item._id}>{item.namecategory}</option>
                         )}
                     </select>

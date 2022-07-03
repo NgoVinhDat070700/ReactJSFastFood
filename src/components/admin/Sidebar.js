@@ -52,7 +52,7 @@ export default function Sidebar() {
                 News
               </li>
             </Link>
-            <Link className="link">
+            <Link className="link" to="/admin/order">
               <li className="sidebarListItem">
                 <BarChart className="sidebarIcon" />
                 Reports

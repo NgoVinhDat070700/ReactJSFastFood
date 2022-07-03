@@ -1,25 +1,21 @@
 import { SearchOutlined } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
+import { fetchDataProduct, fetchDataProductSearch } from '../../redux/ProductSlice'
+import { API_UPLOADIMAGE } from '../../services/config'
 
 const Product = ()=> {
-    const [products,setProducts] = useState([])
-    const [isLoading,setLoading] = useState(true)
+    const {products,isLoading} = useSelector((state)=>state.products)
+    const dispatch = useDispatch()
     useEffect(()=>{
-      axios.get('http://localhost:5000/api/products').then(res=>{
-        if(res.status===200){
-          setProducts(res.data)
-          setLoading(false)
-        }
-      })
+        dispatch(fetchDataProduct())
     },[])
     const [inputSearch,setInputSearch]= useState([])
     const handleSearch = ()=>{
-        axios.get('http://localhost:5000/api/products/search?nameproduct='+inputSearch).then(res=>{
-          setProducts(res.data)
-        })
+        dispatch(fetchDataProductSearch(inputSearch))
     }
     const deleteProduct = (e,id)=>{
       e.preventDefault();
@@ -46,10 +42,10 @@ const Product = ()=> {
             return(
                 <tr key={item._id}>
                     <td>{item.nameproduct}</td>
-                    <td><img src={`http://localhost:5000/uploads/${item.image}`} width="50px" height="50px" alt="image" /></td>
+                    <td><img src={`${API_UPLOADIMAGE}${item.image}`} width="50px" height="50px" alt="image" /></td>
                     <td>{item.price}</td>
                     <td>{item.desc}</td>
-                    <td>{item.status}</td>
+                    {/* <td>{item.status}</td> */}
                     <td>{item.category_id}</td>
                     <td>
                         <Link to={`edit-product/${item._id}`} className="btn btn-success btn-sm">Edit</Link>
@@ -74,7 +70,7 @@ const Product = ()=> {
             <th>Image</th>
             <th>Price</th>
             <th>Desc</th>
-            <th>Status</th>
+            {/* <th>Status</th> */}
             <th>Category_id</th>
             <th>Action</th>
           </thead>

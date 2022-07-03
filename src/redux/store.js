@@ -1,7 +1,13 @@
-import {configureStore,combineReducers} from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit'
 import cartSlice from './cartSlice'
-const rootReducer = combineReducers({cart:cartSlice})
+import productSlice from './ProductSlice'
+import categoriSlice from './CategoriSlice'
+import accountSlice from './AccountSlice'
 export const store = configureStore({
-    reducer: rootReducer,
-    middleware: [],
+    reducer: {
+        cart:cartSlice,
+        products:productSlice,
+        categories:categoriSlice,
+        users:accountSlice
+    }
 })

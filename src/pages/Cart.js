@@ -29,12 +29,14 @@ const Cart = () => {
   console.log(products)
   const handlePayment = (e)=>{
     e.preventDefault()
-    const formData = new FormData()
-    formData.append('userId',localStorage.getItem('user_id'))
-    formData.append('products',products)
-    formData.append('amount',total)
-    formData.append('address',paymentInput.address)
-    formData.append('phone',paymentInput.phone)
+    const formData = {
+      userId:localStorage.getItem('user_id'),
+      products:cart,
+      amount:total,
+      address:paymentInput.address,
+      phone:paymentInput.phone,
+      status:"pending"
+    }
     axios.post('http://localhost:5000/api/order',formData).then(res=>{
       console.log('data',res.data)
         if(res.status===200)
@@ -99,11 +101,11 @@ const Cart = () => {
             <form onSubmit={handlePayment} >
               <div className="form-payment">
                 <label>Address:</label>
-                <input type="text" name="address" onChange={handleInput} value={paymentInput.address} required />
+                <input type="text" className="input-address" name="address" onChange={handleInput} value={paymentInput.address} required />
               </div>
               <div className="form-payment">
                 <label>Phone:</label>
-                <input type="text" name="phone" onChange={handleInput} value={paymentInput.phone} required/>
+                <input type="text" className="input-phone" name="phone" onChange={handleInput} value={paymentInput.phone} required/>
               </div>
               <button type="submit" className="botton-cart" style={{cursor:"pointer"}}>Payment</button>
             </form>

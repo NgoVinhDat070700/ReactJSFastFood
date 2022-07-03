@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert'
+import './addProduct.scss'
 import {useHistory} from 'react-router-dom'
 
 function EditProduct(props){
@@ -74,28 +75,28 @@ function EditProduct(props){
             <form onSubmit={handleSubmit} id="PRODUCT_FORM" encType="multipart/form-data" >
                 <div className="form-data">
                     <label>Name Product:</label>
-                    <input type="text" name="nameproduct" onChange={handleInput} value={productInput.nameproduct}  />
+                    <input className="input-name" type="text" name="nameproduct" onChange={handleInput} value={productInput.nameproduct}  />
                 </div>
                 <div className="form-data">
                     <label>Image:</label>
-                    <input type="file" name="image" onChange={handleImage} />
+                    <input className="input-image" type="file" name="image" onChange={handleImage} />
                     <img src={`http://localhost:5000/uploads/${productInput.image}`} style={{width:80,height:100}} />
                 </div>
                 <div className="form-data">
                     <label>Price:</label>
-                    <input type="text" name="price" required onChange={handleInput} value={productInput.price} />
+                    <input className="input-price" type="text" name="price" required onChange={handleInput} value={productInput.price} />
                 </div>
                 <div className="form-data">
                     <label>Description:</label>
-                    <textarea rows="5" cols="40" name="desc" onChange={handleInput} value={productInput.desc}  />
+                    <textarea className="input-desc" rows="5" cols="40" name="desc" onChange={handleInput} value={productInput.desc}  />
                 </div>
                 <div className="form-data">
                     <label>Status:</label>
-                    <input type="radio" name="status" onChange={handleInput} value={productInput.status}  />Status 0=Còn/1=Hết
+                    <input  type="radio" name="status" onChange={handleInput} value={productInput.status}  />Status 0=Còn/1=Hết
                 </div>
                 <div className="form-data">
                     <label>Categori_id:</label>
-                    <select name="category_id" id="category_id" onChange={handleInput} value={productInput.category_id}>
+                    <select className="input-category" name="category_id" id="category_id" onChange={handleInput} value={productInput.category_id}>
                         {categoryList.map(item=>
                                 <option value={item._id} key={item._id}>{item.namecategory}</option>
                             )}

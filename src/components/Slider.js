@@ -6,7 +6,7 @@ const Slider = ()=>{
         {
             id:0,
             title:'Chào mừng bạn đến với website FastFood',
-            img:'https://cdn.vietnambiz.vn/171464876016439296/2021/3/23/bgrpic-copy-19-1616478414267633905458.jpeg',
+            img:'https://images.squarespace-cdn.com/content/v1/58b15f88b3db2b9cf99a60cd/1554707595712-QJGW8NKAFDS8HTKV1YUZ/image-asset.jpeg?format=1000w',
             description:'Thiên đường đồ ăn nhanh đáp ứng mọi nhu cầu về ẩm thực ',
         },
         {
@@ -29,7 +29,7 @@ const Slider = ()=>{
     const prevSlide=()=>{
         setSlideIndex(slideIndex === 0?slide_items.length -1:slideIndex -1)
     }
-    // console.log(slideIndex)
+    console.log(slideIndex)
     return (
         <div className="slide-container">
             <div className="arrow left">

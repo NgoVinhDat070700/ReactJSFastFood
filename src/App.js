@@ -13,7 +13,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
 function App() {
   const isAdmin = localStorage.getItem('isAdmin')
-  console.log(isAdmin)
   return (
     <Provider store={store} >
     <div className="App">

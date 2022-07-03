@@ -1,7 +1,11 @@
 import axios from 'axios'
 import React,{ useEffect, useState }from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {fetchDataCategories} from '../../redux/CategoriSlice'
 import swal from 'sweetalert'
 import './addProduct.scss'
+import { fetchDataCreateProduct } from '../../redux/ProductSlice'
+import { getDataCategories } from '../../services/CategorieService'
 const AddProduct = ()=>{
     const [productInput, setProductInput] = useState({
         nameproduct:'',
@@ -12,13 +16,15 @@ const AddProduct = ()=>{
         category_id:'',
         
     })
+    const {categories} = useSelector((state)=>state.categories)
+    const dispatch = useDispatch()
     useEffect( ()=>{
-        axios.get('http://localhost:5000/api/category').then(res=>{
-            setCategoryList(res.data)
-        })
-    },[])
+        const getCategories = async()=>{
+            dispatch(fetchDataCategories())
+        }
+        getCategories()
+    },[dispatch])
     const [pricture,setPriture] = useState([])
-    const [categoryList,setCategoryList] = useState([])
     const handleSubmit= (e)=>{
        e.preventDefault()
        const formData = new FormData()
@@ -28,26 +34,9 @@ const AddProduct = ()=>{
        formData.append('desc',productInput.desc)
        formData.append('status',productInput.status)
        formData.append('category_id',productInput.category_id)
-       axios.post('http://localhost:5000/api/products/createProduct',formData).then(res=>{
-           if(res.status===200)
-           {
-            swal('Success',res.data.message,'Success')
-            setProductInput({...productInput,category_id:'',
-            nameproduct:'',
-            image:'',
-            price:'',
-            desc:'',
-            status:'',
-            })
-           }
-           else{
-               swal("Error","Error")
-               
-           }
-       })
+       dispatch(fetchDataCreateProduct(formData))
     }
     const handleInput = (e)=>{
-        e.persist()
         setProductInput({...productInput,[e.target.name]:e.target.value})
     }
     const handleImage = (e)=>{
@@ -59,19 +48,19 @@ const AddProduct = ()=>{
             <form onSubmit={handleSubmit} id="PRODUCT_FORM" encType="multipart/form-data" >
                 <div className="form-data">
                     <label>Name Product:</label>
-                    <input type="text" name="nameproduct" onChange={handleInput} value={productInput.nameproduct} required />
+                    <input className="input-name" type="text" name="nameproduct" onChange={handleInput} value={productInput.nameproduct} required />
                 </div>
                 <div className="form-data">
                     <label>Image:</label>
-                    <input type="file" name="image" onChange={handleImage} required />
+                    <input className="input-image" type="file" name="image" onChange={handleImage} required />
                 </div>
                 <div className="form-data">
                     <label>Price:</label>
-                    <input type="text" name="price" required onChange={handleInput} value={productInput.price} />
+                    <input type="text" className="input-price" name="price" required onChange={handleInput} value={productInput.price} />
                 </div>
                 <div className="form-data">
                     <label>Description:</label>
-                    <textarea rows="5" cols="40" name="desc" onChange={handleInput} value={productInput.desc} required />
+                    <textarea className="input-desc" rows="5" cols="40" name="desc" onChange={handleInput} value={productInput.desc} required />
                 </div>
                 <div className="form-data">
                     <label>Status:</label>
@@ -79,8 +68,8 @@ const AddProduct = ()=>{
                 </div>
                 <div className="form-data">
                     <label>Categori_id:</label>
-                    <select name="category_id" id="category_id" onChange={handleInput} value={productInput.category_id}>
-                        {categoryList.map(item=>
+                    <select className="input-category" name="category_id" id="category_id" onChange={handleInput} value={productInput.category_id}>
+                        {categories.map(item=>
                                 <option value={item._id} key={item._id}>{item.namecategory}</option>
                             )}
                     </select>

@@ -5,9 +5,10 @@ import {useDispatch,useSelector} from 'react-redux'
 import axios from 'axios'
 import {useHistory,Link} from 'react-router-dom'
 import { addToCart } from '../redux/cartSlice'
+import { API_UPLOADIMAGE } from '../services/config'
+import {fetchDataProductSearch_Cate,fetchDataProduct} from "../redux/ProductSlice"
 const Product_List = ({cat_id,filters})=>{
-    const [products,setProducts]=useState([])
-        
+    const {products} = useSelector((state)=>state.products)
         const history = useHistory()
         const dispatch = useDispatch()
         const handleAddCart = (data)=>{ 
@@ -16,18 +17,9 @@ const Product_List = ({cat_id,filters})=>{
             console.log("data",data)
             
         }
-        // const isLoading = useSelector(state => state.cart.isLoading)
         useEffect(() => {
             const getProducts = async ()=>{
-                try {
-                    const res = await axios.get(cat_id?
-                        `http://localhost:5000/api/products/search_category?category_id=${cat_id}`
-                        : "http://localhost:5000/api/products")
-                        setProducts(res.data)
-                }
-                catch (err) {
-
-                }
+                    cat_id?dispatch(fetchDataProductSearch_Cate(cat_id)):dispatch(fetchDataProduct())
             }
             getProducts()
         }, [cat_id])     
@@ -35,11 +27,11 @@ const Product_List = ({cat_id,filters})=>{
         <div className="product-container">
             {products.map((item)=>
             {
-                item.qty = 1
+                
                 return (
                     <div className="product-item" key={item._id} >
                         <div className="circle">
-                        <img className="product-img" src={`http://localhost:5000/uploads/${item.image}`} />
+                        <img className="product-img" src={`${API_UPLOADIMAGE}${item.image}`} />
                         <div className="product-name">{item.nameproduct}</div>
                             <div className="product-icon">
                                 <div className="icon">

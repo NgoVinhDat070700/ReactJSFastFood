@@ -4,12 +4,17 @@ import AddProduct from '../pages/admin/AddProduct'
 import EditNews from '../pages/admin/EditNews'
 import EditProduct from '../pages/admin/EditProduct'
 import EditUser from '../pages/admin/EditUser'
+import Home from '../pages/admin/Home'
 import News from '../pages/admin/News'
 import Product from '../pages/admin/Product'
+import Report from '../pages/admin/Report'
 import User from '../pages/admin/User'
 const ListRouterAdmin=[
     {
-        path:'/admin',exact:true,name:'Admin',
+        path:'/admin',exact:true,name:'Home',component:Home
+    },
+    {
+        path:'/admin/dashboard',exact:true,name:'Home',component:Home
     },
     {
         path:'/admin/products',name:'Product',component:Product
@@ -37,6 +42,9 @@ const ListRouterAdmin=[
     },
     {
         path:'/admin/edit-news/:_id',exact:true,name:'EditNews',component:EditNews
+    },
+    {
+        path:'/admin/order',exact:true,name:'Report',component:Report
     },
 ]
 export default ListRouterAdmin

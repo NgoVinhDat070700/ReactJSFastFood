@@ -1,39 +1,28 @@
 import { SearchOutlined } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
+import { fetchDataAccount, fetchDataDeleteAccount } from '../../redux/AccountSlice'
 function User(){
-    const [users,setUser] = useState([])
-    const [isLoading,setLoading] = useState(true)
+    const {users,isLoading} = useSelector((state)=>state.users)
+    const dispatch = useDispatch()
     useEffect(()=>{
-      axios.get('http://localhost:5000/api/users').then(res=>{
-        if(res.status===200){
-          setUser(res.data)
-          setLoading(false)
-        }
-      })
-    },[])
+      const getListAccount = async()=>{
+        return await dispatch(fetchDataAccount())
+      }
+      getListAccount()
+    },[dispatch])
     const [inputSearch,setInputSearch]= useState([])
     const handleSearch = ()=>{
-        axios.get('http://localhost:5000/api/users/search?email='+inputSearch).then(res=>{
-          setUser(res.data)
-        })
+       
     }
     const deleteUser = (e,id)=>{
       e.preventDefault();
       const thisClicked = e.currentTarget;
       thisClicked.innerText = "Deleting";
-      axios.delete(`http://localhost:5000/api/users/deleteUser/${id}`).then(res=>{
-        if(res.status===200){
-          swal("Success",res.data.message,"Success")
-          thisClicked.closest("tr").remove();
-        }
-        else{
-          swal("Errorr",res.data.error,"Error")
-          thisClicked.innerText = "Deleting";
-        }
-      })
+      dispatch(fetchDataDeleteAccount(id))
     }
     var LIST_ACCOUNT=""
     if(isLoading)
