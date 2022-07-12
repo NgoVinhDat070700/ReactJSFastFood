@@ -28,7 +28,7 @@ function EditUser(props){
         const formData = {
             isAdmin:valueCheckbox.isAdmin?'true':'false'
         }
-        axios.put(`http://localhost:5000/api/users/updateUser/${user_id}`,formData)
+        axios.put(`http://localhost:5000/api/users/${user_id}`,formData)
         .then(res=>{
             if(res.status===200)
             {

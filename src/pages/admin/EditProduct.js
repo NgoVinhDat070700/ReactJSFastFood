@@ -47,7 +47,7 @@ function EditProduct(props){
         formData.append('desc',productInput.desc)
         formData.append('status',productInput.status)
         formData.append('category_id',productInput.category_id)
-        axios.put(`http://localhost:5000/api/products/updateProduct/${product_id}`,formData)
+        axios.put(`http://localhost:5000/api/products/${product_id}`,formData)
         .then(res=>{
             if(res.status===200)
             {

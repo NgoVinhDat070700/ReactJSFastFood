@@ -18,7 +18,6 @@ const Cart = () => {
     phone:''
   })
   const handleInput=(e)=>{
-    e.persist()
     setPaymentInput({...paymentInput,[e.target.name]:e.target.value})
   }
   const products = cart.map((item)=>{

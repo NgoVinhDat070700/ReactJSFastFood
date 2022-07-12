@@ -1,12 +1,12 @@
 import axios from 'axios'
 import React,{ useEffect, useState }from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {fetchDataCategories} from '../../redux/CategoriSlice'
+
 import swal from 'sweetalert'
 import './addProduct.scss'
-import { fetchDataCreateProduct } from '../../redux/ProductSlice'
-import { getDataCategories } from '../../services/CategorieService'
+import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2'
 const AddProduct = ()=>{
+    const history =useHistory() 
     const [productInput, setProductInput] = useState({
         nameproduct:'',
         image:'',
@@ -16,15 +16,13 @@ const AddProduct = ()=>{
         category_id:'',
         
     })
-    const {categories} = useSelector((state)=>state.categories)
-    const dispatch = useDispatch()
     useEffect( ()=>{
-        const getCategories = async()=>{
-            dispatch(fetchDataCategories())
-        }
-        getCategories()
-    },[dispatch])
+        axios.get('http://localhost:5000/api/category').then(res=>{
+            setCategoryList(res.data)
+        })
+    },[])
     const [pricture,setPriture] = useState([])
+    const [categoryList,setCategoryList] = useState([])
     const handleSubmit= (e)=>{
        e.preventDefault()
        const formData = new FormData()
@@ -34,14 +32,32 @@ const AddProduct = ()=>{
        formData.append('desc',productInput.desc)
        formData.append('status',productInput.status)
        formData.append('category_id',productInput.category_id)
-       dispatch(fetchDataCreateProduct(formData))
+       axios.post('http://localhost:5000/api/products',formData).then(res=>{
+           if(res.status===200)
+           {
+            swal('Success',res.data.message,'Success')
+            setProductInput({...productInput,category_id:'',
+            nameproduct:'',
+            image:'',
+            price:'',
+            desc:'',
+            status:'',
+            })
+           }
+           else{
+               swal("Error","Error")
+               
+           }
+       })
     }
     const handleInput = (e)=>{
         setProductInput({...productInput,[e.target.name]:e.target.value})
     }
     const handleImage = (e)=>{
         setPriture({image:e.target.files[0]})
+        console.log(productInput.image)
     }
+    
     return (
         <div className="container-main">
             <h1>Add Product</h1>
@@ -69,7 +85,7 @@ const AddProduct = ()=>{
                 <div className="form-data">
                     <label>Categori_id:</label>
                     <select className="input-category" name="category_id" id="category_id" onChange={handleInput} value={productInput.category_id}>
-                        {categories.map(item=>
+                        {categoryList.map(item=>
                                 <option value={item._id} key={item._id}>{item.namecategory}</option>
                             )}
                     </select>

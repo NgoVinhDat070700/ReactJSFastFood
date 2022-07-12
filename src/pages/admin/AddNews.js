@@ -18,7 +18,9 @@ const AddNews = ()=>{
        formData.append('title',newsInput.title)
        formData.append('video',newsInput.video)
        formData.append('desc',newsInput.desc)
-       axios.post('http://localhost:5000/api/news/createNews',formData).then(res=>{
+       console.log(formData)
+       console.log(pricture.image)
+       axios.post('http://localhost:5000/api/news/',formData).then(res=>{
            if(res.status===200)
            {
             swal('Success',res.data.message,'Success')

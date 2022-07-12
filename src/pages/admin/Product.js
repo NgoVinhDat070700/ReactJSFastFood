@@ -1,37 +1,43 @@
 import { SearchOutlined } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
-import { fetchDataProduct, fetchDataProductSearch } from '../../redux/ProductSlice'
 import { API_UPLOADIMAGE } from '../../services/config'
 
 const Product = ()=> {
-    const {products,isLoading} = useSelector((state)=>state.products)
-    const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch(fetchDataProduct())
-    },[])
-    const [inputSearch,setInputSearch]= useState([])
-    const handleSearch = ()=>{
-        dispatch(fetchDataProductSearch(inputSearch))
-    }
-    const deleteProduct = (e,id)=>{
-      e.preventDefault();
-      const thisClicked = e.currentTarget;
-      thisClicked.innerText = "Deleting";
-      axios.delete(`http://localhost:5000/api/products/deleteProduct/${id}`).then(res=>{
-        if(res.status===200){
-          swal("Success",res.data.message,"Success")
-          thisClicked.closest("tr").remove();
-        }
-        else{
-          swal("Errorr",res.data.error,"Error")
-          thisClicked.innerText = "Deleting";
-        }
+  const [products,setProducts] = useState([])
+  const [isLoading,setLoading] = useState(true)
+  useEffect(()=>{
+    axios.get('http://localhost:5000/api/products').then(res=>{
+      if(res.status===200){
+        setProducts(res.data)
+        setLoading(false)
+      }
+    })
+  },[])
+  const [inputSearch,setInputSearch]= useState([])
+  const handleSearch = ()=>{
+      axios.get('http://localhost:5000/api/products/search?nameproduct='+inputSearch).then(res=>{
+        setProducts(res.data)
       })
-    }
+  }
+  const deleteProduct = (e,id)=>{
+    e.preventDefault();
+    const thisClicked = e.currentTarget;
+    thisClicked.innerText = "Deleting";
+    axios.delete(`http://localhost:5000/api/products/${id}`).then(res=>{
+      if(res.status===200){
+        swal("Success",res.data.message,"Success")
+        thisClicked.closest("tr").remove();
+      }
+      else{
+        swal("Errorr",res.data.error,"Error")
+        thisClicked.innerText = "Deleting";
+      }
+    })
+  }
     var LIST_PRODUCT=""
     if(isLoading)
     {
@@ -51,7 +57,7 @@ const Product = ()=> {
                         <Link to={`edit-product/${item._id}`} className="btn btn-success btn-sm">Edit</Link>
                     </td>
                     <td>
-                        <button type="button" onClick={e=>deleteProduct(e,item._id)} className="btn btn-danger btn-sm">Delete</button>
+                        <button type="button" onClick={()=>deleteProduct(item._id)} className="btn btn-danger btn-sm">Delete</button>
                     </td>
                 </tr>
             )

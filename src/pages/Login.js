@@ -69,20 +69,6 @@ const Login = ()=>{
                     <button type="submit">Login</button>
                 </div>
             </form>
-            <div className="auth">
-                Or login with
-            </div>
-            <div className="links">
-                <div className="facebook">
-                    <Facebook/>
-                </div>
-                <div className="google">
-                    <MailOutline />
-                </div>
-            </div>
-            <div className="signup">
-                Not a member? <a href="">Signup now</a>
-            </div>
         </div>
     )
 }

@@ -6,9 +6,9 @@ import axios from 'axios'
 import {useHistory,Link} from 'react-router-dom'
 import { addToCart } from '../redux/cartSlice'
 import { API_UPLOADIMAGE } from '../services/config'
-import {fetchDataProductSearch_Cate,fetchDataProduct} from "../redux/ProductSlice"
 const Product_List = ({cat_id,filters})=>{
-    const {products} = useSelector((state)=>state.products)
+    const [products,setProducts]=useState([])
+        
         const history = useHistory()
         const dispatch = useDispatch()
         const handleAddCart = (data)=>{ 
@@ -17,17 +17,26 @@ const Product_List = ({cat_id,filters})=>{
             console.log("data",data)
             
         }
+        // const isLoading = useSelector(state => state.cart.isLoading)
         useEffect(() => {
             const getProducts = async ()=>{
-                    cat_id?dispatch(fetchDataProductSearch_Cate(cat_id)):dispatch(fetchDataProduct())
+                try {
+                    const res = await axios.get(cat_id?
+                        `http://localhost:5000/api/products/search_category?category_id=${cat_id}`
+                        : "http://localhost:5000/api/products")
+                        setProducts(res.data)
+                }
+                catch (err) {
+
+                }
             }
             getProducts()
-        }, [cat_id])     
+        }, [cat_id])  
     return (
         <div className="product-container">
             {products.map((item)=>
             {
-                
+                item.qty = 1
                 return (
                     <div className="product-item" key={item._id} >
                         <div className="circle">

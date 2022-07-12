@@ -55,18 +55,7 @@ const Register = ()=>{
                     <div className="inner"></div>
                     <button type="submit">Register</button>
                 </div>
-            </form>
-            <div className="auth">
-                Or register with
-            </div>
-            <div className="links">
-                <div className="facebook">
-                    <Facebook/>
-                </div>
-                <div className="google">
-                    <MailOutline />
-                </div>
-            </div>
+            </form>   
             <div className="signup">
                 <a href="">Login now</a>
             </div>

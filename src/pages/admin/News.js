@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
+import { API_UPLOADIMAGE } from '../../services/config'
 
 const News = ()=> {
     const [news,setNews] = useState([])
@@ -25,7 +26,7 @@ const News = ()=> {
       e.preventDefault();
       const thisClicked = e.currentTarget;
       thisClicked.innerText = "Deleting";
-      axios.delete(`http://localhost:5000/api/news/deleteNews/${id}`).then(res=>{
+      axios.delete(`http://localhost:5000/api/news/${id}`).then(res=>{
         if(res.status===200){
           swal("Success",res.data.message,"Success")
           thisClicked.closest("tr").remove();
@@ -46,7 +47,7 @@ const News = ()=> {
             return(
                 <tr key={item._id}>
                     <td>{item.title}</td>
-                    <td><img src={`http://localhost:5000/uploads/${item.image}`} width="50px" height="50px" alt="image" /></td>
+                    <td><img src={`${API_UPLOADIMAGE}${item.image}`} width="50px" height="50px" alt="image" /></td>
                     <td><iframe width="200" height="100" src={`https://www.youtube.com/embed/${item.video}`}></iframe></td>
                     <td>{item.desc}</td>
                     <td>

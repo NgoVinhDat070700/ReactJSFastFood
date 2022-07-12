@@ -8,17 +8,17 @@ const Navbar = ()=>{
             <div className="navbar-wrapper">
                 <div className="navbar-left">
                     <div className="logo">
-                    <Link className="link" to="/" >FASTFOOD</Link>
+                    <Link className="link" to="/" >KINGFOOD</Link>
                     </div>
                     <div className="navbar-language">
                         EN
                     </div>
                 </div>
                 <div className="navbar-right">
-                    <div className="navbar-search">
+                    {/* <div className="navbar-search">
                         <input type="text" placeholder="Search" />
                         <Search type={{color:'gray',fontSite:16}} />
-                    </div>
+                    </div> */}
                     <div className="navbar-item"><Link className="link" to="/" >Home</Link></div>
                     <div className="navbar-item"><Link className="link" to="/Products" >Product</Link></div>
                     <div className="navbar-item"><Link className="link" to="/Cart" >Cart</Link></div>

@@ -1,15 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import '../assets/css/product.css'
 import Product_List from '../components/Product_List'
-import { fetchDataCategories } from '../redux/CategoriSlice'
 const Products = ()=>{
-    const {categories} = useSelector((state)=>state.categories)
-    const dispatch = useDispatch()
+    const [categoryList,setCategoryList] = useState([])
     useEffect(()=>{
-        dispatch(fetchDataCategories())
+        axios.get('http://localhost:5000/api/category').then(res=>{
+            setCategoryList(res.data)
+        })
     },[])
     const [filters, setFilters] = useState({});
     const handleCategory = (e) => {
@@ -24,10 +23,10 @@ const Products = ()=>{
         <>
             <div className="banner-product">
                 <div className="banner-content">
-                    <img className="img-banner" src="https://qph.fs.quoracdn.net/main-qimg-1a51579507323697e23ce91d51ec4e6e" alt=""  />
+                    <img className="img-banner" src="http://amoon.com.vn/wp-content/uploads/2020/04/8-sai-lam-luyen-tap-9-1400x787.jpg" alt=""  />
                     <div className="content">
-                        <h3 className="title-content">Sản phẩm tại FastFood</h3>
-                        <p className="p-content">Fastfood nơi bạn có thể thoải mái lựa chọn các đồ ăn nhanh vừa ngon vừa rẻ chất lượng đảm bảo 100% </p>
+                        <h3 className="title-content">Sản phẩm tại KingFood</h3>
+                        <p className="p-content">KingFood nơi bạn có thể thoải mái lựa chọn các đồ ăn nhanh vừa ngon vừa rẻ chất lượng đảm bảo 100% </p>
                         <Link className="btn-menu">Ourmenu</Link>
                     </div>
                 </div>
@@ -38,7 +37,7 @@ const Products = ()=>{
                     <span>Filter Products:</span>
                     <select onChange={handleCategory} name="cat_id">
                         <option disabled selected>Category</option>
-                        {categories.map(item=>
+                        {categoryList.map(item=>
                                 <option value={item._id} key={item._id}>{item.namecategory}</option>
                         )}
                     </select>
